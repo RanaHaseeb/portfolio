@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+  }
+
+  body {
+    @apply bg-ink text-content font-sans antialiased;
+    background-image:
+      radial-gradient(60rem 40rem at 78% -10%, rgba(74, 128, 255, 0.14), transparent 60%),
+      radial-gradient(50rem 40rem at 0% 8%, rgba(74, 128, 255, 0.06), transparent 55%);
+    background-repeat: no-repeat;
+  }
+
+  ::selection {
+    background: rgba(74, 128, 255, 0.32);
+    color: #fff;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+
+  ::-webkit-scrollbar {
+    width: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #070a11;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #222c42;
+    border-radius: 999px;
+    border: 3px solid #070a11;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2f3c5a;
+  }
+}
+
+@layer utilities {
+  .text-secondary {
+    color: #aab4c8;
+  }
+  .text-muted {
+    color: #828ca3;
+  }
+  .gradient-text {
+    background: linear-gradient(92deg, #a8c6ff, #4a80ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .glass {
+    background: rgba(10, 14, 22, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .hairline {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .card-hover {
+    transition: border-color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+  }
+  .card-hover:hover {
+    border-color: rgba(74, 128, 255, 0.5);
+    transform: translateY(-4px);
+    background-color: #131b2b;
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(60% 60% at 50% 30%, #000 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(60% 60% at 50% 30%, #000 40%, transparent 100%);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-float {
+    animation: none !important;
+  }
+}
