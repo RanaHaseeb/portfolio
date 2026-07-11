@@ -172,6 +172,62 @@ export const projects: Project[] = [
       "Cross-platform iOS/Android builds via Capacitor with push notifications and social login.",
     ],
   },
+  {
+    name: "Food Recognition & Calorie App",
+    tags: ["Flutter", "Gemini", "TFLite"],
+    summary: "AI food recognition with calorie and nutrition tracking.",
+    points: [
+      "Recognises food via Google Gemini and on-device TensorFlow Lite, with nutrition data from the USDA API.",
+    ],
+  },
+  {
+    name: "Mood / Emotion Detection",
+    tags: ["Python", "Keras", "OpenCV"],
+    summary: "Real-time facial emotion detection from a webcam feed.",
+    points: [
+      "A Teachable Machine / Keras model served through OpenCV for live mood classification.",
+    ],
+  },
+  {
+    name: "Talkative",
+    tags: ["Flutter", "Supabase"],
+    summary: "A real-time chat app with authentication and messaging.",
+    points: [
+      "One-to-one and group messaging built on Supabase realtime and auth.",
+    ],
+  },
+  {
+    name: "The Quran",
+    tags: ["Flutter", "Dart"],
+    summary: "A Quran reader app with a clean, navigable interface.",
+    points: [
+      "Surah and verse navigation across a responsive Flutter UI.",
+    ],
+  },
+  {
+    name: "Call Recorder",
+    tags: ["Flutter", "Dart"],
+    summary: "A mobile call-recording app for Android.",
+    points: [
+      "Records and manages call audio through a simple Flutter interface.",
+    ],
+  },
+  {
+    name: "Laravel Popup Builder",
+    tags: ["Laravel", "Livewire", "Blade"],
+    summary: "A drag-and-drop popup and modal builder for websites.",
+    points: [
+      "Build and configure popups visually with Laravel Blade and Livewire.",
+    ],
+  },
+  {
+    name: "Pakistan Hospitals Scraper",
+    tags: ["Python", "Data pipeline"],
+    summary: "Scrapes and cleans a nationwide dataset of Pakistani hospitals.",
+    points: [
+      "Automated scraping plus a cleaning and filtering pipeline producing a structured dataset.",
+    ],
+  },
 ];
 
 export const additionalProjects = [
