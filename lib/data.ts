@@ -99,10 +99,11 @@ export const projects: Project[] = [
   {
     name: "Masjid Timetable & Ads",
     tags: ["React", "Laravel", "Capacitor"],
-    summary: "Prayer-schedule and advertising management for mosques.",
+    summary:
+      "A digital-signage platform for mosques — screens, prayer times, and content from one dashboard.",
     points: [
-      "Real-time content synchronisation and dynamic ad scheduling with automated community updates.",
-      "A React theme builder reused via Capacitor to power the companion TV app.",
+      "Tablet and TV screen app driven by unique app codes, controlled from a Laravel admin panel managing masjids, screens, playlists, content, and prayer times.",
+      "React theme builder with configurable widgets — clock, prayer countdown, weather, Asma-ul-Husna, and audio — plus per-masjid device management, packaged to devices via Capacitor.",
     ],
     featured: true,
   },
@@ -119,20 +120,23 @@ export const projects: Project[] = [
   {
     name: "Resource Management System",
     tags: ["Laravel", "Ionic", "Angular"],
-    summary: "End-to-end HR and payroll platform streamlining employee management.",
+    summary:
+      "A comprehensive facility and service-user management platform for a multi-site accommodation provider.",
     points: [
-      "Employee profiles, contracts, rotas, and payroll, with geofencing and QR scanning for clock-in / clock-out.",
-      "Cross-platform mobile apps for attendance, payroll, and scheduling, including in-app one-to-one and group chat.",
+      "Workforce management — employee profiles, contracts, rotas, and payroll, with geofenced QR clock-in/out and cross-platform mobile apps.",
+      "Operations suite — visitor QR check-in/out, incident reporting with adult and child safeguarding referrals, transport dispatch (vehicles, drivers, route maps), and inventory with tablet-based maintenance tickets.",
+      "Service-user lifecycle across sites — arrivals and transfers, medical and vaccination records, courses, resident meetings, and budget-controlled dry-stock procurement.",
     ],
     featured: true,
   },
   {
     name: "Scholar Management System",
     tags: ["Laravel", "Flutter"],
-    summary: "Student records, scholarship, and academic-performance platform.",
+    summary:
+      "A multi-stage scholarship application and assessment platform for the Avicenna Foundation.",
     points: [
-      "Laravel REST backend with authentication and role-based permissions; Flutter apps for students and faculty.",
-      "Scholarship tracking, attendance, psychometric testing, location-based check-in, and admin analytics.",
+      "Separate scholar and admin portals driving a staged pipeline — personal details, psychometric test, video submission, online assessment, and in-person interview.",
+      "Laravel backend with role-based permissions, per-stage scoring and approvals, event and slot scheduling, and automated applicant emails; Flutter apps for scholars and faculty.",
     ],
     featured: true,
   },
@@ -148,10 +152,11 @@ export const projects: Project[] = [
   {
     name: "Voters Management System",
     tags: ["Laravel", "Flutter"],
-    summary: "A voter-engagement and data-insight platform.",
+    summary:
+      "A voter-engagement platform with a Laravel portal, Flutter field app, and role-based access.",
     points: [
-      "Voter search and a feedback module for political-party sentiment analysis.",
-      "Clean, scalable UI/UX across the Laravel backend and Flutter mobile app.",
+      "Four roles (admin, leader, volunteer, voter) with party management, approval workflows, and granular roles and permissions.",
+      "Postcode-matched volunteers collect voter records and party-sentiment feedback in the field; bulk upload and analytics on the portal.",
     ],
   },
   {
