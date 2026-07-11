@@ -87,22 +87,22 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    name: "Qanoon AI — Legal Assistant",
-    tags: ["FastAPI", "Python", "React"],
-    summary: "An AI legal assistant for Pakistani law.",
+    name: "Fursa Capital",
+    tags: ["React", "Laravel"],
+    summary: "A platform connecting entrepreneurs with investors.",
     points: [
-      "FastAPI backend serving an LLM-powered assistant over a curated legal knowledge base.",
-      "React chat interface for legal Q&A, deployed as a public demo.",
+      "React front end with a Laravel REST backend, secure authentication, and role-based permissions.",
+      "Project posting, investment tracking, and an admin panel for verification and user management.",
     ],
     featured: true,
   },
   {
-    name: "HotMic Radio",
-    tags: ["React", "TypeScript", "Capacitor"],
-    summary: "A social radio and DJ streaming platform with native mobile apps.",
+    name: "Masjid Timetable & Ads",
+    tags: ["React", "Laravel", "Capacitor"],
+    summary: "Prayer-schedule and advertising management for mosques.",
     points: [
-      "Live charts, polls, giveaways, broadcasts, and a team inbox, with moderation tooling and DJ analytics.",
-      "Cross-platform iOS/Android builds via Capacitor with push notifications and social login.",
+      "Real-time content synchronisation and dynamic ad scheduling with automated community updates.",
+      "A React theme builder reused via Capacitor to power the companion TV app.",
     ],
     featured: true,
   },
@@ -137,24 +137,6 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    name: "Fursa Capital",
-    tags: ["React", "Laravel"],
-    summary: "A platform connecting entrepreneurs with investors.",
-    points: [
-      "React front end with a Laravel REST backend, secure authentication, and role-based permissions.",
-      "Project posting, investment tracking, and an admin panel for verification and user management.",
-    ],
-  },
-  {
-    name: "Masjid Timetable & Ads",
-    tags: ["React", "Laravel", "Capacitor"],
-    summary: "Prayer-schedule and advertising management for mosques.",
-    points: [
-      "Real-time content synchronisation and dynamic ad scheduling with automated community updates.",
-      "A React theme builder reused via Capacitor to power the companion TV app.",
-    ],
-  },
-  {
     name: "Morahanat Strike Zone",
     tags: ["React", "TypeScript", "Capacitor"],
     summary: "A multi-sport prediction game across football, F1, and UFC.",
@@ -170,6 +152,24 @@ export const projects: Project[] = [
     points: [
       "Voter search and a feedback module for political-party sentiment analysis.",
       "Clean, scalable UI/UX across the Laravel backend and Flutter mobile app.",
+    ],
+  },
+  {
+    name: "Qanoon AI — Legal Assistant",
+    tags: ["FastAPI", "Python", "React"],
+    summary: "An AI legal assistant for Pakistani law.",
+    points: [
+      "FastAPI backend serving an LLM-powered assistant over a curated legal knowledge base.",
+      "React chat interface for legal Q&A, deployed as a public demo.",
+    ],
+  },
+  {
+    name: "HotMic Radio",
+    tags: ["React", "TypeScript", "Capacitor"],
+    summary: "A social radio and DJ streaming platform with native mobile apps.",
+    points: [
+      "Live charts, polls, giveaways, broadcasts, and a team inbox, with moderation tooling and DJ analytics.",
+      "Cross-platform iOS/Android builds via Capacitor with push notifications and social login.",
     ],
   },
 ];
