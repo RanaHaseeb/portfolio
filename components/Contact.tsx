@@ -74,20 +74,22 @@ export default function Contact() {
                 href={l.href}
                 target={l.external ? "_blank" : undefined}
                 rel={l.external ? "noopener noreferrer" : undefined}
-                className="card-hover group flex items-center justify-between rounded-xl border border-white/[0.08] bg-ink-800/50 p-5"
+                className="card-hover group flex items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-ink-800/50 p-5"
               >
-                <span className="flex items-center gap-3">
-                  <span className="grid h-10 w-10 place-items-center rounded-lg bg-cobalt/10 text-cobalt-light ring-1 ring-cobalt/20">
+                <span className="flex min-w-0 flex-1 items-center gap-3">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-cobalt/10 text-cobalt-light ring-1 ring-cobalt/20">
                     <Icon className="h-[18px] w-[18px]" />
                   </span>
-                  <span className="text-left">
+                  <span className="min-w-0 text-left">
                     <span className="block font-mono text-[11px] uppercase tracking-wider text-muted">
                       {l.label}
                     </span>
-                    <span className="block text-sm text-content">{l.value}</span>
+                    <span className="block truncate text-sm text-content" title={l.value}>
+                      {l.value}
+                    </span>
                   </span>
                 </span>
-                <ArrowUpRight className="text-muted transition-colors group-hover:text-cobalt-light" />
+                <ArrowUpRight className="shrink-0 text-muted transition-colors group-hover:text-cobalt-light" />
               </a>
             );
           })}
