@@ -1,24 +1,25 @@
 import Reveal from "./Reveal";
 
 export default function SectionHeading({
-  index,
   eyebrow,
   title,
   intro,
 }: {
-  index: string;
   eyebrow: string;
   title: string;
   intro?: string;
 }) {
   return (
     <Reveal className="max-w-2xl">
-      <div className="flex items-center gap-3 font-mono text-xs tracking-wider text-cobalt-light/80">
-        <span>{index}</span>
-        <span className="h-px w-8 bg-cobalt/40" />
-        <span className="uppercase tracking-[0.2em]">{eyebrow}</span>
+      <div className="flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.22em] text-cobalt-light/80">
+        <span
+          className="h-1.5 w-1.5 rounded-full"
+          style={{ background: "linear-gradient(130deg, #4a80ff, #7c5cff)" }}
+          aria-hidden="true"
+        />
+        {eyebrow}
       </div>
-      <h2 className="mt-4 text-3xl font-semibold text-content sm:text-4xl">
+      <h2 className="mt-5 font-display text-3xl font-semibold tracking-tight text-content sm:text-[2.6rem] sm:leading-[1.05]">
         {title}
       </h2>
       {intro && (
