@@ -124,7 +124,7 @@ export default function ProjectShowcase({ projects }: { projects: Project[] }) {
               <div className="relative flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">
                   <div className="inline-flex items-center gap-2">
-                    <h3 className="text-lg font-medium tracking-tight text-content">
+                    <h3 className="font-display text-lg font-medium tracking-tight text-content">
                       <span className="relative">
                         {project.name}
                         <span

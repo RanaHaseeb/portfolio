@@ -16,7 +16,7 @@ export default function About() {
       className="border-y border-white/[0.06] bg-ink-900/40"
     >
       <div className="mx-auto max-w-content scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32">
-        <SectionHeading index="02" eyebrow="About" title="A builder who ships" />
+        <SectionHeading eyebrow="About" title="A builder who ships" />
 
         <div className="mt-12 grid gap-12 lg:grid-cols-[1.5fr_1fr]">
           <Reveal>

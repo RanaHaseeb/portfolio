@@ -30,12 +30,12 @@ export default function Contact() {
   return (
     <section id="contact" className="relative mx-auto max-w-content scroll-mt-24 px-5 py-24 sm:px-8 sm:py-36">
       <Reveal className="text-center">
-        <div className="flex items-center justify-center gap-3 font-mono text-xs tracking-wider text-cobalt-light/80">
-          <span className="h-px w-8 bg-cobalt/40" />
-          <span className="uppercase tracking-[0.2em]">05 — Contact</span>
-          <span className="h-px w-8 bg-cobalt/40" />
+        <div className="flex items-center justify-center gap-2.5 font-mono text-xs uppercase tracking-[0.22em] text-cobalt-light/80">
+          <span className="h-px w-8 bg-gradient-to-r from-transparent to-cobalt/50" />
+          Contact
+          <span className="h-px w-8 bg-gradient-to-l from-transparent to-iris/50" />
         </div>
-        <h2 className="mx-auto mt-6 max-w-2xl text-4xl font-semibold text-content sm:text-5xl">
+        <h2 className="mx-auto mt-6 max-w-2xl font-display text-4xl font-semibold tracking-tight text-content sm:text-[3.25rem] sm:leading-[1.03]">
           Let&apos;s build something{" "}
           <span className="gradient-text">worth shipping</span>.
         </h2>
@@ -74,7 +74,7 @@ export default function Contact() {
                 href={l.href}
                 target={l.external ? "_blank" : undefined}
                 rel={l.external ? "noopener noreferrer" : undefined}
-                className="card-hover group flex items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-ink-800/50 p-5"
+                className="card-hover glow-edge group flex items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-ink-800/50 p-5"
               >
                 <span className="flex min-w-0 flex-1 items-center gap-3">
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-cobalt/10 text-cobalt-light ring-1 ring-cobalt/20">

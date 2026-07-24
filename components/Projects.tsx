@@ -10,7 +10,6 @@ export default function Projects() {
   return (
     <section id="work" className="mx-auto max-w-content scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32">
       <SectionHeading
-        index="01"
         eyebrow="Selected work"
         title="Products I've shipped"
         intro="A selection of platforms I've led or built end to end — from investment tooling and AI assistants to cross-platform mobile apps."
@@ -28,9 +27,9 @@ export default function Projects() {
           {rest.map((p) => (
             <div
               key={p.name}
-              className="card-hover rounded-xl border border-white/[0.07] bg-ink-800/40 p-5"
+              className="card-hover glow-edge rounded-xl border border-white/[0.07] bg-ink-800/40 p-5"
             >
-              <h4 className="text-sm font-medium text-content">{p.name}</h4>
+              <h4 className="font-display text-sm font-medium text-content">{p.name}</h4>
               <p className="mt-1.5 text-xs leading-relaxed text-muted">{p.summary}</p>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {p.tags.map((t) => (

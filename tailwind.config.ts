@@ -18,6 +18,10 @@ const config: Config = {
           light: "#7fb0ff",
           dark: "#3a6ae0",
         },
+        iris: {
+          DEFAULT: "#7c5cff",
+          light: "#9d86ff",
+        },
         content: {
           DEFAULT: "#e8ecf4",
           secondary: "#aab4c8",
@@ -28,6 +32,7 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
+        display: ["var(--font-display)", "var(--font-geist-sans)", "sans-serif"],
       },
       maxWidth: {
         content: "1120px",

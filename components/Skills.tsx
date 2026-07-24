@@ -10,7 +10,6 @@ export default function Skills() {
     >
       <div className="mx-auto max-w-content scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32">
         <SectionHeading
-          index="04"
           eyebrow="Toolkit"
           title="Technologies I work with"
         />
@@ -18,7 +17,7 @@ export default function Skills() {
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {skills.map((group, i) => (
             <Reveal key={group.label} delay={(i % 3) * 70} className="h-full">
-              <div className="h-full rounded-2xl border border-white/[0.08] bg-ink-800/50 p-6">
+              <div className="card-hover glow-edge h-full rounded-2xl border border-white/[0.08] bg-ink-800/50 p-6">
                 <h3 className="font-mono text-xs uppercase tracking-[0.18em] text-cobalt-light/80">
                   {group.label}
                 </h3>

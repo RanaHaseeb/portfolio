@@ -6,7 +6,6 @@ export default function Experience() {
   return (
     <section id="experience" className="mx-auto max-w-content scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32">
       <SectionHeading
-        index="03"
         eyebrow="Experience"
         title="Eight years, one company, four roles"
         intro="I've grown at Green Origin Pvt Ltd from associate engineer to senior technical project manager — deepening both the code and the delivery."
@@ -29,7 +28,7 @@ export default function Experience() {
                 <p className="font-mono text-xs tracking-wide text-cobalt-light/80">
                   {job.period}
                 </p>
-                <h3 className="mt-1.5 text-lg font-semibold text-content">{job.role}</h3>
+                <h3 className="mt-1.5 font-display text-lg font-semibold text-content">{job.role}</h3>
                 <p className="text-sm text-muted">
                   {job.company} · {job.location}
                 </p>
