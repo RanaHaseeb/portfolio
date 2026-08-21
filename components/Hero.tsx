@@ -111,7 +111,7 @@ export default function Hero() {
           {/* ---------------- Avatar column ---------------- */}
           <motion.div
             {...step}
-            className="relative mx-auto w-full max-w-[340px] lg:mx-0 lg:ml-auto"
+            className="relative mx-auto w-full max-w-[300px] lg:mx-0 lg:ml-auto"
           >
             <div
               className="pointer-events-none absolute -inset-8 rounded-full opacity-70 blur-2xl"
@@ -122,16 +122,15 @@ export default function Hero() {
               aria-hidden="true"
             />
             <div className="relative">
-              <Avatar size={340} className="h-auto w-full drop-shadow-2xl" id="hero-av" />
+              <Avatar size={300} className="h-auto w-full drop-shadow-2xl" id="hero-av" />
 
-              {/* Floating credential chips — anchored to the plate corners */}
-              <div className="absolute -left-3 top-8 rounded-xl border border-hairline bg-surface/90 px-3 py-2 shadow-card backdrop-blur sm:-left-6">
+              {/* One credential chip, anchored low so it sits over the
+                  shoulder rather than across the face. The "Currently" chip
+                  that used to sit opposite is dropped: the headline already
+                  says AI-integrated, and About carries it as a hard fact. */}
+              <div className="absolute -left-3 bottom-6 rounded-xl border border-hairline bg-surface/90 px-3 py-2 shadow-card backdrop-blur sm:-left-6">
                 <p className="t-caption text-fg-faint">Based in</p>
                 <p className="mt-0.5 text-xs font-medium text-fg">{profile.location}</p>
-              </div>
-              <div className="absolute -right-2 bottom-10 rounded-xl border border-hairline bg-surface/90 px-3 py-2 shadow-card backdrop-blur sm:-right-5">
-                <p className="t-caption text-fg-faint">Currently</p>
-                <p className="mt-0.5 text-xs font-medium text-fg">AI-integrated apps</p>
               </div>
             </div>
           </motion.div>

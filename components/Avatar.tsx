@@ -1,11 +1,10 @@
+import Image from "next/image";
 import { profile } from "@/lib/data";
 
 /**
- * Generative geometric avatar — a stand-in for a headshot.
- * Drop a real photo at /public/profile.jpg and swap this for a next/image
- * and the surrounding layout keeps working unchanged.
- *
- * Colours come from the theme tokens, so it re-tints with the palette.
+ * Portrait mark. Renders the real headshot when `profile.photo` is set, and
+ * otherwise falls back to a generative geometric monogram in the theme
+ * colours. Both variants occupy the same box, so callers don't change.
  */
 export default function Avatar({
   size = 320,
@@ -18,6 +17,38 @@ export default function Avatar({
   id?: string;
 }) {
   const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
+
+  if (profile.photo) {
+    return (
+      <div
+        className={`relative overflow-hidden rounded-[24%] ring-1 ring-accent/30 ${className}`}
+        style={{ aspectRatio: "1 / 1" }}
+      >
+        <Image
+          src={profile.photo}
+          alt={`${profile.name}, ${profile.role}`}
+          width={size}
+          height={size}
+          quality={90}
+          // The hero copy is the LCP element, not this — let it load lazily
+          // everywhere except the fold, where `priority` is cheap insurance.
+          priority={size >= 320}
+          sizes={`${size}px`}
+          className="h-full w-full object-cover"
+        />
+        {/* Edge-only treatment. Deliberately no colour wash across the middle:
+            an accent tint over skin tones reads as a broken white balance. */}
+        <span
+          className="pointer-events-none absolute inset-0 rounded-[24%]"
+          style={{
+            boxShadow:
+              "inset 0 0 0 1px rgb(var(--accent) / 0.2), inset 0 -70px 60px -55px rgba(0,0,0,0.55)",
+          }}
+          aria-hidden="true"
+        />
+      </div>
+    );
+  }
 
   return (
     <svg

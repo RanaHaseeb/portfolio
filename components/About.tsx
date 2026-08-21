@@ -25,7 +25,7 @@ export default function About() {
           {/* Portrait + facts */}
           <div className="order-2 lg:order-1">
             <Reveal x={-24}>
-              <div className="relative mx-auto max-w-[280px] lg:mx-0">
+              <div className="relative mx-auto max-w-[240px] lg:mx-0">
                 <div
                   className="pointer-events-none absolute -inset-6 rounded-full opacity-60 blur-2xl"
                   style={{
@@ -34,7 +34,7 @@ export default function About() {
                   }}
                   aria-hidden="true"
                 />
-                <Avatar size={280} className="relative h-auto w-full" id="about-av" />
+                <Avatar size={240} className="relative h-auto w-full" id="about-av" />
               </div>
             </Reveal>
 

@@ -4,6 +4,13 @@ export const profile = {
   lastName: "Haseeb",
   role: "Senior Technical Project Manager",
   location: "Lahore, Pakistan",
+  /**
+   * Real headshot, self-hosted (never hotlink LinkedIn — those CDN URLs are
+   * signed and expire). Set to null to fall back to the generated monogram.
+   * Current file is 200x200; replacing it with a >=640px original is the
+   * single biggest sharpness win available here.
+   */
+  photo: "/profile.jpeg" as string | null,
   /** Hero: the evocative line */
   headline:
     "Senior Technical Project Manager shipping AI-integrated products end to end.",
