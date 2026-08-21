@@ -1,32 +1,34 @@
 import type { Config } from "tailwindcss";
 
+/** Every colour resolves through a CSS variable so the theme toggle is a
+ *  single attribute swap on <html> — no class-level dark: variants needed. */
+const token = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 const config: Config = {
+  darkMode: ["class", '[data-theme="dark"]'],
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        ink: {
-          DEFAULT: "#0a0e16",
-          900: "#070a11",
-          800: "#0d1220",
-          700: "#111725",
-          600: "#161f31",
-          500: "#1e2942",
+        canvas: {
+          DEFAULT: token("canvas"),
+          soft: token("canvas-soft"),
         },
-        cobalt: {
-          DEFAULT: "#4a80ff",
-          light: "#7fb0ff",
-          dark: "#3a6ae0",
+        surface: {
+          DEFAULT: token("surface"),
+          hi: token("surface-hi"),
         },
-        iris: {
-          DEFAULT: "#7c5cff",
-          light: "#9d86ff",
+        fg: {
+          DEFAULT: token("fg"),
+          soft: token("fg-soft"),
+          muted: token("fg-muted"),
+          faint: token("fg-faint"),
         },
-        content: {
-          DEFAULT: "#e8ecf4",
-          secondary: "#aab4c8",
-          muted: "#828ca3",
-          faint: "#5b647a",
+        accent: {
+          DEFAULT: token("accent"),
+          hi: token("accent-hi"),
+          lo: token("accent-lo"),
+          alt: token("accent-alt"),
         },
       },
       fontFamily: {
@@ -35,10 +37,20 @@ const config: Config = {
         display: ["var(--font-display)", "var(--font-geist-sans)", "sans-serif"],
       },
       maxWidth: {
-        content: "1120px",
+        content: "1200px",
       },
       borderColor: {
-        DEFAULT: "rgba(255,255,255,0.08)",
+        DEFAULT: "var(--hairline)",
+        hairline: "var(--hairline)",
+        strong: "var(--hairline-strong)",
+      },
+      backgroundColor: {
+        tint: "var(--tint)",
+        "tint-hi": "var(--tint-hi)",
+      },
+      boxShadow: {
+        card: "var(--shadow-card)",
+        lift: "var(--shadow-lift)",
       },
       keyframes: {
         "fade-up": {
@@ -49,10 +61,15 @@ const config: Config = {
           "0%,100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        "bob": {
+          "0%,100%": { transform: "translateY(0)", opacity: "0.55" },
+          "50%": { transform: "translateY(6px)", opacity: "1" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.7s ease forwards",
         float: "float 8s ease-in-out infinite",
+        bob: "bob 2.2s ease-in-out infinite",
       },
     },
   },

@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Download, Menu, X } from "lucide-react";
 import { navLinks, profile } from "@/lib/data";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState<string>("");
+  const calm = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => {
@@ -21,6 +25,7 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Active-section highlight
   useEffect(() => {
     const ids = navLinks.map((l) => l.href.replace("#", ""));
     const sections = ids
@@ -41,10 +46,26 @@ export default function Nav() {
     return () => io.disconnect();
   }, []);
 
+  // Lock the page and wire Escape while the drawer is open
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "glass border-b border-white/[0.06]" : "border-b border-transparent"
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+        scrolled ? "glass border-b border-hairline" : "border-b border-transparent"
       }`}
     >
       {/* Scroll progress */}
@@ -52,18 +73,25 @@ export default function Nav() {
         className="absolute inset-x-0 top-0 h-px origin-left"
         style={{
           transform: `scaleX(${progress})`,
-          background: "linear-gradient(90deg, #4a80ff, #7c5cff)",
+          background:
+            "linear-gradient(90deg, rgb(var(--accent)), rgb(var(--accent-alt)))",
           transition: "transform 0.1s linear",
         }}
         aria-hidden="true"
       />
 
-      <nav className="mx-auto flex h-16 max-w-content items-center justify-between px-5 sm:px-8">
-        <a href="#top" className="group flex items-center gap-2.5" aria-label="Home">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-cobalt/15 font-mono text-sm font-medium text-cobalt-light ring-1 ring-cobalt/25">
+      <nav
+        aria-label="Primary"
+        className="mx-auto flex h-16 max-w-content items-center justify-between px-5 sm:px-8"
+      >
+        <a href="#top" className="group flex items-center gap-2.5" aria-label={`${profile.name} — home`}>
+          <span
+            className="grid h-9 w-9 place-items-center rounded-lg font-display text-sm font-bold tracking-tight text-accent-hi ring-1 ring-accent/30 transition-transform duration-300 group-hover:scale-105"
+            style={{ background: "rgb(var(--accent) / 0.12)" }}
+          >
             AH
           </span>
-          <span className="font-display text-sm font-medium tracking-tight text-content">
+          <span className="hidden font-display text-sm font-semibold tracking-tight text-fg sm:block">
             {profile.name}
           </span>
         </a>
@@ -77,7 +105,7 @@ export default function Nav() {
                 href={link.href}
                 aria-current={isActive ? "true" : undefined}
                 className={`relative rounded-lg px-3.5 py-2 text-sm transition-colors ${
-                  isActive ? "text-content" : "text-secondary hover:text-content"
+                  isActive ? "text-fg" : "text-fg-muted hover:text-fg"
                 }`}
               >
                 {link.label}
@@ -85,67 +113,124 @@ export default function Nav() {
                   className={`absolute inset-x-3.5 -bottom-0.5 h-px origin-left rounded-full transition-transform duration-300 ${
                     isActive ? "scale-x-100" : "scale-x-0"
                   }`}
-                  style={{ background: "linear-gradient(90deg, #4a80ff, #7c5cff)" }}
+                  style={{
+                    background:
+                      "linear-gradient(90deg, rgb(var(--accent)), rgb(var(--accent-alt)))",
+                  }}
                   aria-hidden="true"
                 />
               </a>
             );
           })}
+
+          <span className="mx-2 h-5 w-px bg-[var(--hairline)]" aria-hidden="true" />
+          <ThemeToggle />
           <a
             href={profile.resume}
             target="_blank"
             rel="noopener noreferrer"
-            className="ml-2 rounded-lg border border-white/10 px-3.5 py-2 text-sm font-medium text-content transition-colors hover:border-cobalt/50 hover:bg-cobalt/10"
+            className="ml-1 inline-flex items-center gap-1.5 rounded-lg border border-hairline px-3.5 py-2 text-sm font-medium text-fg transition-colors hover:border-accent/50 hover:bg-tint"
           >
+            <Download className="h-4 w-4" aria-hidden="true" />
             Résumé
           </a>
         </div>
 
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-content md:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            {open ? (
-              <path d="M18 6 6 18M6 6l12 12" strokeLinecap="round" />
-            ) : (
-              <path d="M3 12h18M3 6h18M3 18h18" strokeLinecap="round" />
-            )}
-          </svg>
-        </button>
-      </nav>
-
-      {open && (
-        <div className="glass border-t border-white/[0.06] md:hidden">
-          <div className="mx-auto flex max-w-content flex-col px-5 py-3 sm:px-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className={`rounded-lg px-2 py-3 text-sm transition-colors ${
-                  active === link.href.replace("#", "")
-                    ? "text-content"
-                    : "text-secondary hover:text-content"
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
-            <a
-              href={profile.resume}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setOpen(false)}
-              className="mt-1 rounded-lg border border-white/10 px-2 py-3 text-sm font-medium text-content"
-            >
-              Download résumé
-            </a>
-          </div>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="grid h-9 w-9 place-items-center rounded-lg border border-hairline text-fg"
+            aria-label="Open menu"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+          >
+            <Menu className="h-[18px] w-[18px]" aria-hidden="true" />
+          </button>
         </div>
-      )}
-    </header>
+        </nav>
+      </header>
+
+      {/* Rendered outside <header>: its backdrop-filter would otherwise become
+          the containing block for these fixed children, clipping them to the
+          64px bar instead of the viewport. */}
+      <AnimatePresence>
+        {open && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-[60] bg-black/50 md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: calm ? 0.01 : 0.25 }}
+              onClick={() => setOpen(false)}
+              aria-hidden="true"
+            />
+            <motion.div
+              id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Menu"
+              /* Opaque rather than `glass` — a drawer needs to hide what's
+                 behind it, not tint it. */
+              className="fixed inset-y-0 right-0 z-[70] flex w-[82%] max-w-xs flex-col border-l border-hairline bg-canvas-soft p-6 shadow-2xl md:hidden"
+              initial={calm ? { opacity: 0 } : { x: "100%" }}
+              animate={calm ? { opacity: 1 } : { x: 0 }}
+              exit={calm ? { opacity: 0 } : { x: "100%" }}
+              transition={{ duration: calm ? 0.01 : 0.32, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="flex items-center justify-between">
+                <span className="t-caption text-fg-muted">Menu</span>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="grid h-9 w-9 place-items-center rounded-lg border border-hairline text-fg"
+                  aria-label="Close menu"
+                  autoFocus
+                >
+                  <X className="h-[18px] w-[18px]" aria-hidden="true" />
+                </button>
+              </div>
+
+              <div className="mt-8 flex flex-col">
+                {navLinks.map((link, i) => (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    initial={calm ? false : { opacity: 0, x: 18 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: calm ? 0 : 0.08 + i * 0.05, duration: 0.35 }}
+                    className={`border-b border-hairline py-4 font-display text-lg font-medium transition-colors ${
+                      active === link.href.replace("#", "")
+                        ? "text-accent-hi"
+                        : "text-fg hover:text-accent-hi"
+                    }`}
+                  >
+                    {link.label}
+                  </motion.a>
+                ))}
+              </div>
+
+              <a
+                href={profile.resume}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="btn btn-primary mt-8"
+              >
+                <Download className="h-4 w-4" aria-hidden="true" />
+                Download résumé
+              </a>
+
+              <p className="mt-auto pt-8 text-xs text-fg-faint">
+                {profile.location}
+              </p>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
