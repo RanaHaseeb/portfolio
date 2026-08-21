@@ -2,108 +2,268 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* ------------------------------------------------------------------
+   Design tokens
+   Colours are stored as bare `R G B` triplets so Tailwind's
+   `rgb(var(--x) / <alpha-value>)` opacity modifiers keep working
+   (text-fg/70, bg-accent/10, …). Alpha-baked tokens (hairlines, tints)
+   are stored as full rgba() because their opacity differs per theme.
+   ------------------------------------------------------------------ */
+
+:root,
+[data-theme="dark"] {
   color-scheme: dark;
+
+  --canvas: 8 11 18;
+  --canvas-soft: 11 15 25;
+  --surface: 16 22 36;
+  --surface-hi: 22 30 48;
+
+  --fg: 233 237 245;
+  --fg-soft: 176 185 203;
+  --fg-muted: 138 148 170;
+  --fg-faint: 126 137 160;
+
+  --accent: 96 128 250;
+  --accent-hi: 150 176 255;
+  --accent-lo: 62 92 214;
+  --accent-alt: 138 110 255;
+  /* Button fill: deep enough that white label text clears WCAG AA (4.5:1).
+     The brighter --accent is for text/strokes on the dark canvas, where it
+     is the one that passes. */
+  --accent-solid: 62 92 214;
+  --accent-solid-hover: 48 74 186;
+
+  --hairline: rgba(255, 255, 255, 0.09);
+  --hairline-strong: rgba(255, 255, 255, 0.16);
+  --tint: rgba(255, 255, 255, 0.035);
+  --tint-hi: rgba(255, 255, 255, 0.07);
+
+  --shadow-card: 0 20px 46px -24px rgba(0, 0, 0, 0.85);
+  --shadow-lift: 0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
+    0 22px 50px -24px rgba(60, 100, 240, 0.55),
+    0 0 0 1px rgba(138, 110, 255, 0.14);
+
+  --grid-line: rgba(255, 255, 255, 0.04);
+  --noise-opacity: 0.035;
+
+  --glass: rgba(8, 11, 18, 0.72);
+
+  --halo-a: rgba(96, 128, 250, 0.2);
+  --halo-b: rgba(138, 110, 255, 0.16);
+  --halo-c: rgba(96, 128, 250, 0.07);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --canvas: 250 250 252;
+  --canvas-soft: 255 255 255;
+  --surface: 255 255 255;
+  --surface-hi: 244 246 251;
+
+  --fg: 14 19 32;
+  --fg-soft: 66 77 98;
+  --fg-muted: 92 103 125;
+  --fg-faint: 98 108 128;
+
+  --accent: 60 82 214;
+  --accent-hi: 44 62 176;
+  --accent-lo: 44 62 176;
+  --accent-alt: 104 74 226;
+  --accent-solid: 60 82 214;
+  --accent-solid-hover: 44 62 176;
+
+  --hairline: rgba(14, 19, 32, 0.11);
+  --hairline-strong: rgba(14, 19, 32, 0.2);
+  --tint: rgba(14, 19, 32, 0.028);
+  --tint-hi: rgba(14, 19, 32, 0.06);
+
+  --shadow-card: 0 18px 40px -28px rgba(16, 24, 48, 0.35);
+  --shadow-lift: 0 1px 0 0 rgba(255, 255, 255, 0.9) inset,
+    0 22px 44px -26px rgba(40, 60, 150, 0.4),
+    0 0 0 1px rgba(60, 82, 214, 0.16);
+
+  --grid-line: rgba(14, 19, 32, 0.05);
+  --noise-opacity: 0.02;
+
+  --glass: rgba(250, 250, 252, 0.76);
+
+  --halo-a: rgba(60, 82, 214, 0.12);
+  --halo-b: rgba(104, 74, 226, 0.1);
+  --halo-c: rgba(60, 82, 214, 0.05);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 88px;
+    scroll-padding-top: 92px;
   }
 
   body {
-    @apply bg-ink text-content font-sans antialiased;
+    @apply bg-canvas font-sans text-fg antialiased;
     background-image:
-      radial-gradient(58rem 40rem at 82% -12%, rgba(124, 92, 255, 0.16), transparent 60%),
-      radial-gradient(52rem 40rem at 4% 4%, rgba(74, 128, 255, 0.12), transparent 58%),
-      radial-gradient(40rem 30rem at 50% 120%, rgba(74, 128, 255, 0.06), transparent 60%);
+      radial-gradient(58rem 40rem at 82% -12%, var(--halo-b), transparent 60%),
+      radial-gradient(52rem 40rem at 4% 4%, var(--halo-a), transparent 58%),
+      radial-gradient(40rem 30rem at 50% 120%, var(--halo-c), transparent 60%);
     background-attachment: fixed;
     background-repeat: no-repeat;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  /* Film grain — self-contained SVG noise, sits above backgrounds, below nav */
+  /* Film grain — self-contained SVG noise, above backgrounds, below nav */
   body::after {
     content: "";
     position: fixed;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.035;
+    opacity: var(--noise-opacity);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   ::selection {
-    background: rgba(124, 92, 255, 0.34);
-    color: #fff;
+    background: rgb(var(--accent-alt) / 0.3);
+    color: rgb(var(--fg));
   }
 
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     text-wrap: balance;
     letter-spacing: -0.02em;
+  }
+
+  /* Visible keyboard focus everywhere; pointer clicks stay clean */
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent-hi));
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 
   ::-webkit-scrollbar {
     width: 11px;
   }
   ::-webkit-scrollbar-track {
-    background: #070a11;
+    background: rgb(var(--canvas));
   }
   ::-webkit-scrollbar-thumb {
-    background: #222c42;
+    background: var(--hairline-strong);
     border-radius: 999px;
-    border: 3px solid #070a11;
+    border: 3px solid rgb(var(--canvas));
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #2f3c5a;
+    background: rgb(var(--fg-faint));
+  }
+}
+
+@layer components {
+  /* Type scale — a single source of truth for the display/heading ramp */
+  .t-display {
+    @apply font-display font-semibold tracking-[-0.035em];
+    font-size: clamp(2.75rem, 9vw, 5.75rem);
+    line-height: 0.94;
+  }
+  .t-h2 {
+    @apply font-display font-semibold tracking-tight;
+    font-size: clamp(1.95rem, 4.2vw, 2.7rem);
+    line-height: 1.06;
+  }
+  .t-h3 {
+    @apply font-display font-semibold tracking-tight;
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    line-height: 1.25;
+  }
+  .t-eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.22em];
+  }
+  .t-caption {
+    @apply font-mono text-[11px] uppercase tracking-[0.16em];
+  }
+
+  /* Pill badge used for tech tags */
+  .pill {
+    @apply inline-flex items-center rounded-md border px-2 py-0.5 font-mono text-[11px] leading-5;
+    border-color: var(--hairline);
+    background: var(--tint);
+    color: rgb(var(--fg-muted));
+  }
+  .pill-accent {
+    border-color: rgb(var(--accent) / 0.28);
+    background: rgb(var(--accent) / 0.1);
+    color: rgb(var(--accent-hi));
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-medium transition-all duration-200;
+  }
+  .btn-primary {
+    background: rgb(var(--accent-solid));
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: rgb(var(--accent-solid-hover));
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px -12px rgb(var(--accent) / 0.8);
+  }
+  .btn-ghost {
+    border: 1px solid var(--hairline-strong);
+    color: rgb(var(--fg));
+  }
+  .btn-ghost:hover {
+    border-color: rgb(var(--accent) / 0.5);
+    background: var(--tint);
+    transform: translateY(-1px);
   }
 }
 
 @layer utilities {
-  .text-secondary {
-    color: #aab4c8;
-  }
-  .text-muted {
-    color: #828ca3;
-  }
   .gradient-text {
-    background: linear-gradient(96deg, #a8c6ff 0%, #4a80ff 45%, #9d86ff 100%);
+    background: linear-gradient(
+      96deg,
+      rgb(var(--accent-hi)) 0%,
+      rgb(var(--accent)) 45%,
+      rgb(var(--accent-alt)) 100%
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
   .glass {
-    background: rgba(10, 14, 22, 0.72);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: var(--glass);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
   }
   .hairline {
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--hairline);
   }
-  /* Unified card: soft lift + cobalt→iris edge glow on hover */
+  /* Unified card: soft lift + accent edge glow on hover */
   .card-hover {
     position: relative;
     transition: border-color 0.35s ease, transform 0.35s ease,
       background-color 0.35s ease, box-shadow 0.35s ease;
   }
   .card-hover:hover {
-    border-color: rgba(124, 92, 255, 0.45);
+    border-color: rgb(var(--accent-alt) / 0.42);
     transform: translateY(-4px);
-    background-color: #131b2b;
-    box-shadow:
-      0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
-      0 18px 44px -22px rgba(74, 128, 255, 0.55),
-      0 0 0 1px rgba(124, 92, 255, 0.12);
+    background-color: rgb(var(--surface-hi));
+    box-shadow: var(--shadow-lift);
   }
-  /* Gradient hairline that reveals on hover, drawn on a ::before overlay */
+  /* Gradient hairline revealed on hover, drawn on a ::before overlay */
   .glow-edge::before {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(130deg, rgba(74, 128, 255, 0.6), rgba(124, 92, 255, 0.5) 55%, transparent 80%);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    background: linear-gradient(
+      130deg,
+      rgb(var(--accent) / 0.6),
+      rgb(var(--accent-alt) / 0.5) 55%,
+      transparent 80%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     opacity: 0;
@@ -115,36 +275,83 @@
   }
   .grid-bg {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
     background-size: 56px 56px;
     mask-image: radial-gradient(60% 60% at 50% 30%, #000 40%, transparent 100%);
-    -webkit-mask-image: radial-gradient(60% 60% at 50% 30%, #000 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(
+      60% 60% at 50% 30%,
+      #000 40%,
+      transparent 100%
+    );
+  }
+  .dot-bg {
+    background-image: radial-gradient(
+      var(--grid-line) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+  }
+  /* Fades a scrollable row's trailing edge instead of a hard cut */
+  .fade-r {
+    mask-image: linear-gradient(to right, #000 82%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 82%, transparent 100%);
   }
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
+/* Custom cursor — only mounted on fine-pointer devices */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  border-radius: 9999px;
+  will-change: transform;
 }
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: rgb(var(--accent-hi));
+}
+.cursor-ring {
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  border: 1px solid rgb(var(--accent) / 0.55);
+  transition: width 0.22s ease, height 0.22s ease, margin 0.22s ease,
+    background-color 0.22s ease, border-color 0.22s ease, opacity 0.22s ease;
+}
+.cursor-ring[data-active="true"] {
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  background: rgb(var(--accent) / 0.12);
+  border-color: rgb(var(--accent) / 0.75);
+}
+/* Hide the OS cursor only once ours is actually running */
+html[data-cursor="custom"],
+html[data-cursor="custom"] a,
+html[data-cursor="custom"] button,
+html[data-cursor="custom"] [role="button"] {
+  cursor: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
-  .animate-float {
-    animation: none !important;
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
   }
 }

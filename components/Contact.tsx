@@ -1,100 +1,118 @@
+import { ArrowUpRight, FileText, Mail, MapPin } from "lucide-react";
+import { Github, Linkedin } from "./BrandIcons";
 import { profile } from "@/lib/data";
-import Reveal from "./Reveal";
-import { Mail, Github, Linkedin, Download, ArrowUpRight } from "./icons";
+import { Reveal, Stagger, StaggerItem } from "./Motion";
+import ContactForm from "./ContactForm";
+import CopyEmail from "./CopyEmail";
+
+/** `value` stays short so the three cards never truncate side by side. */
+const socials = [
+  { label: "GitHub", value: "RanaHaseeb", href: profile.github, Icon: Github, external: true },
+  {
+    label: "LinkedIn",
+    value: "abdul-haseeb",
+    href: profile.linkedin,
+    Icon: Linkedin,
+    external: true,
+  },
+  {
+    label: "Email",
+    value: "Message me directly",
+    href: `mailto:${profile.email}`,
+    Icon: Mail,
+    external: false,
+  },
+];
 
 export default function Contact() {
-  const links = [
-    {
-      label: "Email",
-      value: profile.email,
-      href: `mailto:${profile.email}`,
-      icon: Mail,
-      external: false,
-    },
-    {
-      label: "LinkedIn",
-      value: "in/abdul-haseeb",
-      href: profile.linkedin,
-      icon: Linkedin,
-      external: true,
-    },
-    {
-      label: "GitHub",
-      value: "github.com/RanaHaseeb",
-      href: profile.github,
-      icon: Github,
-      external: true,
-    },
-  ];
-
   return (
-    <section id="contact" className="relative mx-auto max-w-content scroll-mt-24 px-5 py-24 sm:px-8 sm:py-36">
-      <Reveal className="text-center">
-        <div className="flex items-center justify-center gap-2.5 font-mono text-xs uppercase tracking-[0.22em] text-cobalt-light/80">
-          <span className="h-px w-8 bg-gradient-to-r from-transparent to-cobalt/50" />
-          Contact
-          <span className="h-px w-8 bg-gradient-to-l from-transparent to-iris/50" />
-        </div>
-        <h2 className="mx-auto mt-6 max-w-2xl font-display text-4xl font-semibold tracking-tight text-content sm:text-[3.25rem] sm:leading-[1.03]">
-          Let&apos;s build something{" "}
-          <span className="gradient-text">worth shipping</span>.
-        </h2>
-        <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-          Whether you need a technical lead, a full-stack engineer, or a delivery
-          partner who can do both — I&apos;d love to hear about your project.
-        </p>
+    <section
+      id="contact"
+      className="relative mx-auto max-w-content scroll-mt-24 px-5 py-24 sm:px-8 sm:py-32"
+    >
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-72 dot-bg opacity-60" aria-hidden="true" />
 
-        <div className="mt-9 flex flex-wrap items-center justify-center gap-3.5">
-          <a
-            href={`mailto:${profile.email}`}
-            className="group inline-flex items-center gap-2 rounded-xl bg-cobalt px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-cobalt-dark"
-          >
-            <Mail className="h-4 w-4" />
-            {profile.email}
-          </a>
-          <a
-            href={profile.resume}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/12 px-5 py-3 text-sm font-medium text-content transition-colors hover:border-cobalt/50 hover:bg-white/[0.03]"
-          >
-            <Download />
-            Download résumé
-          </a>
-        </div>
-      </Reveal>
+      <div className="relative grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
+        {/* Pitch */}
+        <div>
+          <Reveal>
+            <div className="flex items-center gap-2.5 t-eyebrow text-accent-hi">
+              <span
+                className="h-1.5 w-1.5 rounded-full"
+                style={{
+                  background:
+                    "linear-gradient(130deg, rgb(var(--accent)), rgb(var(--accent-alt)))",
+                }}
+                aria-hidden="true"
+              />
+              Contact
+            </div>
+            <h2 className="t-h2 mt-5 text-fg">
+              Let&apos;s build something <span className="gradient-text">worth shipping</span>.
+            </h2>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-fg-muted sm:text-lg">
+              Have a project in mind, or looking for a technical lead who can architect
+              it and then actually deliver it? Let&apos;s talk.
+            </p>
+          </Reveal>
 
-      <Reveal delay={120} className="mt-14">
-        <div className="grid gap-4 sm:grid-cols-3">
-          {links.map((l) => {
-            const Icon = l.icon;
-            return (
-              <a
-                key={l.label}
-                href={l.href}
-                target={l.external ? "_blank" : undefined}
-                rel={l.external ? "noopener noreferrer" : undefined}
-                className="card-hover glow-edge group flex items-center justify-between gap-3 rounded-xl border border-white/[0.08] bg-ink-800/50 p-5"
-              >
-                <span className="flex min-w-0 flex-1 items-center gap-3">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-cobalt/10 text-cobalt-light ring-1 ring-cobalt/20">
-                    <Icon className="h-[18px] w-[18px]" />
+          <Reveal delay={90} className="mt-8 flex flex-wrap items-center gap-3.5">
+            <CopyEmail />
+            <a
+              href={profile.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost"
+            >
+              <FileText className="h-4 w-4" aria-hidden="true" />
+              Download résumé
+              <span className="pill ml-0.5">PDF</span>
+            </a>
+          </Reveal>
+
+          <Reveal delay={150}>
+            <p className="mt-7 inline-flex items-center gap-2 text-sm text-fg-muted">
+              <MapPin className="h-4 w-4 text-accent-hi" aria-hidden="true" />
+              {profile.location} — working with teams across time zones
+            </p>
+          </Reveal>
+
+          <Stagger className="mt-9 grid gap-3 sm:grid-cols-3" step={0.07}>
+            {socials.map(({ label, value, href, Icon, external }) => (
+              <StaggerItem key={label} className="h-full">
+                <a
+                  href={href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                  className="card-hover glow-edge group flex h-full items-center gap-3 rounded-xl border border-hairline bg-surface/60 p-4"
+                >
+                  <span
+                    className="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-accent-hi ring-1 ring-accent/20"
+                    style={{ background: "rgb(var(--accent) / 0.1)" }}
+                  >
+                    <Icon className="h-[17px] w-[17px]" aria-hidden="true" />
                   </span>
-                  <span className="min-w-0 text-left">
-                    <span className="block font-mono text-[11px] uppercase tracking-wider text-muted">
-                      {l.label}
-                    </span>
-                    <span className="block truncate text-sm text-content" title={l.value}>
-                      {l.value}
+                  <span className="min-w-0 flex-1">
+                    <span className="block t-caption text-fg-faint">{label}</span>
+                    <span className="block truncate text-xs text-fg" title={value}>
+                      {value}
                     </span>
                   </span>
-                </span>
-                <ArrowUpRight className="shrink-0 text-muted transition-colors group-hover:text-cobalt-light" />
-              </a>
-            );
-          })}
+                  <ArrowUpRight
+                    className="h-4 w-4 shrink-0 text-fg-faint transition-colors group-hover:text-accent-hi"
+                    aria-hidden="true"
+                  />
+                </a>
+              </StaggerItem>
+            ))}
+          </Stagger>
         </div>
-      </Reveal>
+
+        {/* Form */}
+        <Reveal delay={120} x={24}>
+          <ContactForm />
+        </Reveal>
+      </div>
     </section>
   );
 }
