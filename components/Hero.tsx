@@ -111,7 +111,7 @@ export default function Hero() {
           {/* ---------------- Avatar column ---------------- */}
           <motion.div
             {...step}
-            className="relative mx-auto w-full max-w-[340px] lg:mx-0 lg:ml-auto"
+            className="relative mx-auto w-full max-w-[300px] lg:mx-0 lg:ml-auto"
           >
             <div
               className="pointer-events-none absolute -inset-8 rounded-full opacity-70 blur-2xl"
@@ -122,7 +122,7 @@ export default function Hero() {
               aria-hidden="true"
             />
             <div className="relative">
-              <Avatar size={340} className="h-auto w-full drop-shadow-2xl" id="hero-av" />
+              <Avatar size={300} className="h-auto w-full drop-shadow-2xl" id="hero-av" />
 
               {/* One credential chip, anchored low so it sits over the
                   shoulder rather than across the face. The "Currently" chip
